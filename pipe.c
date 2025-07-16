@@ -9,14 +9,14 @@ int main(void)
 
     if(!fork())
     {
-        close(1);
-        dup(pfds[1]);
+        dup2(pfds[1], 1); /*combines close and dup automatically*/
         close(pfds[0]);
+        close(pfds[1]);
         execlp("ls", "ls", NULL);
     }
     else{
-        close(0);
-        dup(pfds[0]);
+        dup2(pfds[0], 0);
+        close(pfds[0]);
         close(pfds[1]);
         execlp("wc", "wc", "-l", NULL);
     }
