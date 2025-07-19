@@ -7,13 +7,13 @@
 #include <sys/ipc.h>
 #include <sys/msg.h>
 
-struct ms_msgbuf {
+struct my_msgbuf {
     long mtype;
     char mtext[200];
-}
+};
 
 int main(void){
-    struct my_msg_buf;
+    struct my_msgbuf buf;
     int msqid;
     key_t key ; 
     if ((key = ftok("kirk.c", 'B')) == -1)
@@ -25,7 +25,7 @@ int main(void){
 		perror("msgget");
 		exit(1);
 	}
-    printf("spock: ready to receive message, captain. \n")
+    printf("spock: ready to receive message, captain. \n");
     for (;;)
     {
         if (msgrcv(msqid, &buf, sizeof buf.mtext, 0, 0)== -1)
